@@ -7,7 +7,7 @@ using System.Net.Http.Headers;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-
+using Newtonsoft.Json;
 
 namespace ApartmentRestClientKanne
 {
@@ -25,10 +25,21 @@ namespace ApartmentRestClientKanne
                 
                 client.BaseAddress = new Uri(serverurl);
 
+                string lol = "apartment/";
+                //Task<HttpResponseMessage> task = client.GetAsync(serverurl + lol);
+                var responseAsync = client.GetAsync(serverurl + lol).Result;
 
-                Task<HttpResponseMessage> task = client.GetAsync("apartment/");
+                if (responseAsync.IsSuccessStatusCode)
+                {
+                    aplist = (List<Apartment>)responseAsync.Content.ReadAsAsync<IList<Apartment>>().Result;
+                    //aplist = responseAsync.Content.
 
-                Console.WriteLine(task);
+                    foreach (Apartment a in aplist)
+                    {
+                        Console.WriteLine(a);
+                    }
+                }
+                //Console.WriteLine(task.Result);
             }
    
             Console.ReadLine();
