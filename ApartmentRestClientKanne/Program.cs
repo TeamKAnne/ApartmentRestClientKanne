@@ -25,9 +25,9 @@ namespace ApartmentRestClientKanne
                 
                 client.BaseAddress = new Uri(serverurl);
 
-                string lol = "apartment/";
+                string requeststr = "apartment/";
                 //Task<HttpResponseMessage> task = client.GetAsync(serverurl + lol);
-                var responseAsync = client.GetAsync(serverurl + lol).Result;
+                var responseAsync = client.GetAsync(serverurl + requeststr).Result;
 
                 if (responseAsync.IsSuccessStatusCode)
                 {
@@ -36,7 +36,10 @@ namespace ApartmentRestClientKanne
 
                     foreach (Apartment a in aplist)
                     {
-                        Console.WriteLine(a);
+                        Console.WriteLine();
+                        Console.WriteLine("Lejlighed til salg:");
+                        
+                        Console.WriteLine(a.ToString());
                     }
                 }
                 //Console.WriteLine(task.Result);

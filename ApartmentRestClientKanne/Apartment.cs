@@ -28,7 +28,9 @@ namespace ApartmentRestClientKanne
 
         public override string ToString()
         {
-            return Location;
+            return "Pris for lejlighed: " + price + ".\n" + "Lejligheden ligger: " + Location + ".\n" + "Postnummer er: " 
+                + PostalCode + ".\n" + "Størrelsen af lejligheden " + Size + ".\n" + "Antal værelser: " + NoRoom + ".\n" +
+                "Har vaskemaskine: " + WashingMachine + ".\n" + "Har opvasker: " + Dishwasher + "." ;
         }
     }
 }
