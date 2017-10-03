@@ -26,14 +26,13 @@ namespace ApartmentRestClientKanne
                 client.BaseAddress = new Uri(serverurl);
 
                 string requeststr = "apartment/";
-                //Task<HttpResponseMessage> task = client.GetAsync(serverurl + lol);
+                
                 var responseAsync = client.GetAsync(serverurl + requeststr).Result;
 
                 if (responseAsync.IsSuccessStatusCode)
                 {
                     aplist = (List<Apartment>)responseAsync.Content.ReadAsAsync<IList<Apartment>>().Result;
-                    //aplist = responseAsync.Content.
-
+                    
                     foreach (Apartment a in aplist)
                     {
                         Console.WriteLine();
@@ -42,7 +41,6 @@ namespace ApartmentRestClientKanne
                         Console.WriteLine(a.ToString());
                     }
                 }
-                //Console.WriteLine(task.Result);
             }
    
             Console.ReadLine();
