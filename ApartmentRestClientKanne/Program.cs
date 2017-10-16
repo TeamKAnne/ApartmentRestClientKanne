@@ -170,6 +170,30 @@ namespace ApartmentRestClientKanne
                     Console.Write("Error");
             }
 
+
+            using (var deleteClient = new HttpClient())
+            {
+                const string serverurl =
+                    "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
+
+                deleteClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                deleteClient.BaseAddress = new Uri(serverurl);
+
+                var response = deleteClient.DeleteAsync("apartments/21").Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine("Success");
+                }
+                else
+                {
+                    Console.WriteLine("Error");
+                }
+
+            }
+
             Console.ReadLine();
         }
     }
