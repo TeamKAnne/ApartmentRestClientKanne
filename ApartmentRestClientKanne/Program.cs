@@ -19,28 +19,29 @@ namespace ApartmentRestClientKanne
 
             using (var getClient = new HttpClient())
             {
-                const string serverurl = "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
+                const string serverurl =
+                    "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
 
                 getClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                
+
                 getClient.BaseAddress = new Uri(serverurl);
 
                 string requeststr = "apartment/";
-                
+
                 var responseAsync = getClient.GetAsync(serverurl + requeststr).Result;
 
                 if (responseAsync.IsSuccessStatusCode)
                 {
-                    aplist = (List<Apartment>)responseAsync.Content.ReadAsAsync<IList<Apartment>>().Result;
+                    aplist = (List<Apartment>) responseAsync.Content.ReadAsAsync<IList<Apartment>>().Result;
 
                     //aplist = responseAsync.Content.ReadAsAsync<IList<Apartment>>().Result as List<Apartment>;
 
-                    
+
                     foreach (Apartment a in aplist)
                     {
                         Console.WriteLine();
                         Console.WriteLine("Lejlighed til salg:");
-                        
+
                         Console.WriteLine(a.ToString());
                     }
                 }
@@ -51,7 +52,8 @@ namespace ApartmentRestClientKanne
                 const string serverurl =
                     "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
 
-                getPostNrClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                getPostNrClient.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
 
                 getPostNrClient.BaseAddress = new Uri(serverurl);
 
@@ -102,6 +104,70 @@ namespace ApartmentRestClientKanne
                         Console.WriteLine(a.ToString());
                     }
                 }
+            }
+
+
+            using (var postClient = new HttpClient())
+            {
+                const string serverurl =
+                    "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
+
+                postClient.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Apartment apartment = new Apartment
+                {
+                    Price = 1000,
+                    Location = "Test",
+                    PostalCode = 40,
+                    NoRoom = 5,
+                    Size = 666,
+                    WashingMachine = true,
+                    Dishwasher = true
+                };
+
+                postClient.BaseAddress = new Uri(serverurl);
+
+                var response = postClient.PostAsJsonAsync("apartments/", apartment).Result;
+
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("Succes");
+                }
+                else
+                {
+                    Console.WriteLine("Error");
+                }
+            }
+
+            using (var putClient = new HttpClient())
+            {
+                const string serverurl =
+                    "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
+
+                putClient.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
+
+                Apartment newApartment = new Apartment
+                {
+                    Price = 1000,
+                    Location = "PLACEBOput",
+                    PostalCode = 40,
+                    NoRoom = 5,
+                    Size = 666,
+                    WashingMachine = true,
+                    Dishwasher = true
+                };
+
+                putClient.BaseAddress = new Uri(serverurl);
+
+                var response = putClient.PutAsJsonAsync("apartments/1", newApartment).Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.Write("Success");
+                }
+                else
+                    Console.Write("Error");
             }
 
             Console.ReadLine();
