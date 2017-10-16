@@ -17,17 +17,17 @@ namespace ApartmentRestClientKanne
         {
             IList<Apartment> aplist = new List<Apartment>();
 
-            using (var client = new HttpClient())
+            using (var getClient = new HttpClient())
             {
                 const string serverurl = "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
 
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                getClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 
-                client.BaseAddress = new Uri(serverurl);
+                getClient.BaseAddress = new Uri(serverurl);
 
                 string requeststr = "apartment/";
                 
-                var responseAsync = client.GetAsync(serverurl + requeststr).Result;
+                var responseAsync = getClient.GetAsync(serverurl + requeststr).Result;
 
                 if (responseAsync.IsSuccessStatusCode)
                 {
@@ -46,18 +46,18 @@ namespace ApartmentRestClientKanne
                 }
             }
 
-            using (var client = new HttpClient())
+            using (var getPostNrClient = new HttpClient())
             {
                 const string serverurl =
                     "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
 
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                getPostNrClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri(serverurl);
+                getPostNrClient.BaseAddress = new Uri(serverurl);
 
                 string requeststr = "apartment/postalcode/{code}";
 
-                var responseAsyncPC = client.GetAsync(serverurl + requeststr).Result;
+                var responseAsyncPC = getPostNrClient.GetAsync(serverurl + requeststr).Result;
 
                 if (responseAsyncPC.IsSuccessStatusCode)
                 {
@@ -75,18 +75,19 @@ namespace ApartmentRestClientKanne
             }
 
 
-            using (var client = new HttpClient())
+            using (var getLokationClient = new HttpClient())
             {
                 const string serverurl =
                     "http://apartmentrestkanne20171003122404.azurewebsites.net/ApartmentService.svc/";
 
-                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                getLokationClient.DefaultRequestHeaders.Accept.Add(
+                    new MediaTypeWithQualityHeaderValue("application/json"));
 
-                client.BaseAddress = new Uri(serverurl);
+                getLokationClient.BaseAddress = new Uri(serverurl);
 
                 string requeststr = "apartment/location/{location}";
 
-                var responseAsyncLocation = client.GetAsync(serverurl + requeststr).Result;
+                var responseAsyncLocation = getLokationClient.GetAsync(serverurl + requeststr).Result;
 
                 if (responseAsyncLocation.IsSuccessStatusCode)
                 {
@@ -102,7 +103,7 @@ namespace ApartmentRestClientKanne
                     }
                 }
             }
-   
+
             Console.ReadLine();
         }
     }
